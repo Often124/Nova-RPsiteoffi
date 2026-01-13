@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Nova-RP - Serveur RP FiveM immersif avec une communauté active. Rejoignez l'aventure !">
+  <meta name="keywords" content="Nova RP, FiveM, roleplay, GTA V, serveur RP, GTA RP">
+  <meta name="author" content="Nova-RP">
+  <title>Nova-RP | Serveur Roleplay FiveM</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/marketplace.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#home" class="nav-logo" data-section="home">
+        <i class="fas fa-gamepad"></i>
+        Nova-RP
+      </a>
+      
+      <button class="nav-toggle" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      
+      <ul class="nav-links">
+        <li><a href="#home" data-section="home" class="active"><i class="fas fa-home"></i> Accueil</a></li>
+        <li><a href="#reglement" data-section="reglement"><i class="fas fa-scroll"></i> Règlement</a></li>
+        <li><a href="#staff" data-section="staff"><i class="fas fa-users"></i> Staff</a></li>
+        <li><a href="#changelog" data-section="changelog"><i class="fas fa-newspaper"></i> Changelog</a></li>
+        <li><a href="#candidatures" data-section="candidatures"><i class="fas fa-file-alt"></i> Candidatures</a></li>
+        <li><a href="#leboncoin" data-section="leboncoin"><i class="fas fa-store"></i> LeBonCoin</a></li>
+        <li><a href="#liens" data-section="liens"><i class="fas fa-link"></i> Liens</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    <!-- ============================================
+         HOME SECTION
+    ============================================ -->
+    <section id="home" class="section active">
+      <div class="hero">
+        <div class="hero-content">
+          <span class="hero-badge">
+            <i class="fas fa-circle"></i> Serveur en ligne
+          </span>
+          <h1>Bienvenue sur Nova-RP</h1>
+          <p class="hero-subtitle">
+            Plongez dans une expérience roleplay unique sur FiveM. 
+            Créez votre histoire, rejoignez une communauté passionnée.
+          </p>
+          <div class="hero-buttons">
+            <a href="https://discord.gg/novarp" target="_blank" class="btn btn-primary btn-lg">
+              <i class="fab fa-discord"></i> Rejoindre Discord
+            </a>
+            <a href="#candidatures" class="btn btn-secondary btn-lg" onclick="navigateTo('candidatures')">
+              <i class="fas fa-paper-plane"></i> Postuler
+            </a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat">
+              <div class="stat-value">500+</div>
+              <div class="stat-label">Joueurs</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">50K+</div>
+              <div class="stat-label">Heures de RP</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">24/7</div>
+              <div class="stat-label">En ligne</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Features Section -->
+      <div class="container">
+        <div class="section-header">
+          <h2>Pourquoi Nova-RP ?</h2>
+          <p>Découvrez ce qui rend notre serveur unique</p>
+        </div>
+        
+        <div class="grid grid-3">
+          <div class="card">
+            <i class="fas fa-theater-masks" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem;"></i>
+            <h4>Roleplay Immersif</h4>
+            <p>Des scénarios riches et une communauté dédiée à créer des histoires mémorables.</p>
+          </div>
+          <div class="card">
+            <i class="fas fa-cogs" style="font-size: 2.5rem; color: var(--secondary); margin-bottom: 1rem;"></i>
+            <h4>Scripts Exclusifs</h4>
+            <p>Systèmes personnalisés : métiers, économie, véhicules, immobilier et plus encore.</p>
+          </div>
+          <div class="card">
+            <i class="fas fa-headset" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 1rem;"></i>
+            <h4>Staff Réactif</h4>
+            <p>Une équipe disponible 24/7 pour vous accompagner et garantir une expérience optimale.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         REGLEMENT SECTION
+    ============================================ -->
+    <section id="reglement" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Règlement du Serveur</h2>
+          <p>Respectez ces règles pour garantir une expérience agréable pour tous</p>
+        </div>
+        
+        <div class="rules-container" id="rules-container">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         STAFF SECTION
+    ============================================ -->
+    <section id="staff" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Notre Équipe</h2>
+          <p>Les personnes qui font vivre Nova-RP au quotidien</p>
+        </div>
+        
+        <div class="grid grid-3" id="staff-grid">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         CHANGELOG SECTION
+    ============================================ -->
+    <section id="changelog" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Changelog & Actualités</h2>
+          <p>Restez informé des dernières mises à jour du serveur</p>
+        </div>
+        
+        <div class="rules-container" id="changelog-container">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         CANDIDATURES SECTION
+    ============================================ -->
+    <section id="candidatures" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Candidatures Whitelist</h2>
+          <p>Rejoignez l'aventure Nova-RP en soumettant votre candidature</p>
+        </div>
+        
+        <div class="application-info">
+          <h4><i class="fas fa-info-circle"></i> Avant de postuler</h4>
+          <ul>
+            <li>Avoir lu et accepté le règlement complet</li>
+            <li>Avoir un microphone fonctionnel</li>
+            <li>Être majeur ou avoir l'accord parental</li>
+            <li>Avoir une expérience RP (même débutant)</li>
+            <li>Être disponible régulièrement pour jouer</li>
+          </ul>
+        </div>
+        
+        <div class="application-form">
+          <h3><i class="fas fa-file-signature"></i> Formulaire de candidature</h3>
+          <form id="application-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="app-pseudo">Pseudo Discord</label>
+                <input type="text" id="app-pseudo" name="pseudo" class="form-control" placeholder="Votre pseudo#1234" required>
+              </div>
+              <div class="form-group">
+                <label for="app-age">Âge</label>
+                <input type="number" id="app-age" name="age" class="form-control" placeholder="Votre âge" min="13" max="99" required>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="app-experience">Expérience RP</label>
+              <select id="app-experience" name="experience" class="form-control" required>
+                <option value="">Sélectionnez votre niveau</option>
+                <option value="debutant">Débutant (< 1 an)</option>
+                <option value="intermediaire">Intermédiaire (1-3 ans)</option>
+                <option value="experimente">Expérimenté (3+ ans)</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="app-background">Background de votre personnage</label>
+              <textarea id="app-background" name="background" class="form-control" placeholder="Décrivez l'histoire de votre personnage, ses motivations, son caractère..." rows="5" required></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label for="app-motivation">Pourquoi Nova-RP ?</label>
+              <textarea id="app-motivation" name="motivation" class="form-control" placeholder="Qu'est-ce qui vous attire sur notre serveur ?" rows="3" required></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label for="app-availability">Disponibilités</label>
+              <input type="text" id="app-availability" name="availability" class="form-control" placeholder="Ex: Soirs en semaine, week-ends..." required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+              <i class="fas fa-paper-plane"></i> Envoyer ma candidature
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         LEBONCOIN SECTION
+    ============================================ -->
+    <section id="leboncoin" class="section">
+      <div class="container">
+        <div class="marketplace-header">
+          <h2><i class="fas fa-store"></i> LeBonCoin Nova-RP</h2>
+          <button class="btn btn-primary" onclick="openCreateAdModal()">
+            <i class="fas fa-plus"></i> Déposer une annonce
+          </button>
+        </div>
+        
+        <div class="marketplace-filters">
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="marketplace-search" placeholder="Rechercher une annonce...">
+          </div>
+        </div>
+        
+        <div class="category-tabs" id="category-tabs">
+          <!-- Rendered by JS -->
+        </div>
+        
+        <div class="ads-grid" id="ads-grid">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         LIENS SECTION
+    ============================================ -->
+    <section id="liens" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Liens Utiles</h2>
+          <p>Tous les liens importants pour rejoindre et profiter de Nova-RP</p>
+        </div>
+        
+        <div class="links-grid">
+          <a href="https://discord.gg/novarp" target="_blank" class="card link-card discord">
+            <div class="icon">
+              <i class="fab fa-discord"></i>
+            </div>
+            <div>
+              <h4>Discord Officiel</h4>
+              <p>Rejoignez notre communauté Discord</p>
+            </div>
+          </a>
+          
+          <a href="https://fivem.net" target="_blank" class="card link-card fivem">
+            <div class="icon">
+              <i class="fas fa-gamepad"></i>
+            </div>
+            <div>
+              <h4>Télécharger FiveM</h4>
+              <p>Installez FiveM pour jouer sur le serveur</p>
+            </div>
+          </a>
+          
+          <a href="#reglement" class="card link-card guide" onclick="navigateTo('reglement')">
+            <div class="icon">
+              <i class="fas fa-book"></i>
+            </div>
+            <div>
+              <h4>Guide du Débutant</h4>
+              <p>Tout ce qu'il faut savoir pour commencer</p>
+            </div>
+          </a>
+          
+          <a href="#candidatures" class="card link-card" onclick="navigateTo('candidatures')">
+            <div class="icon">
+              <i class="fas fa-user-plus"></i>
+            </div>
+            <div>
+              <h4>Postuler</h4>
+              <p>Soumettez votre candidature whitelist</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>Nova-RP</h4>
+          <p class="text-muted">Serveur roleplay FiveM immersif avec une communauté active et passionnée.</p>
+          <div class="social-links">
+            <a href="https://discord.gg/novarp" target="_blank" title="Discord"><i class="fab fa-discord"></i></a>
+            <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="#" title="TikTok"><i class="fab fa-tiktok"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Navigation</h4>
+          <a href="#home" onclick="navigateTo('home')">Accueil</a>
+          <a href="#reglement" onclick="navigateTo('reglement')">Règlement</a>
+          <a href="#staff" onclick="navigateTo('staff')">Staff</a>
+          <a href="#leboncoin" onclick="navigateTo('leboncoin')">LeBonCoin</a>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Ressources</h4>
+          <a href="#candidatures" onclick="navigateTo('candidatures')">Candidatures</a>
+          <a href="#changelog" onclick="navigateTo('changelog')">Changelog</a>
+          <a href="#liens" onclick="navigateTo('liens')">Liens utiles</a>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <a href="https://discord.gg/novarp" target="_blank">Discord</a>
+          <a href="mailto:contact@nova-rp.fr">contact@nova-rp.fr</a>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2026 Nova-RP. Tous droits réservés. Non affilié à Rockstar Games.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================
+       MODALS
+  ============================================ -->
+  
+  <!-- Ad Detail Modal -->
+  <div class="modal-overlay" id="ad-detail-modal">
+    <div class="modal" style="max-width: 700px;">
+      <div class="modal-header">
+        <h3>Détail de l'annonce</h3>
+        <button class="modal-close" onclick="closeModal('ad-detail-modal')">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Content rendered by JS -->
+      </div>
+    </div>
+  </div>
+  
+  <!-- Create Ad Modal -->
+  <div class="modal-overlay" id="create-ad-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3><i class="fas fa-plus-circle"></i> Créer une annonce</h3>
+        <button class="modal-close" onclick="closeModal('create-ad-modal')">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="create-ad-form" class="create-ad-form" onsubmit="submitCreateAd(event)">
+          <div class="form-group">
+            <label for="ad-title">Titre de l'annonce *</label>
+            <input type="text" id="ad-title" name="title" class="form-control" placeholder="Ex: Vapid Dominator GTX - État neuf" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="ad-category">Catégorie *</label>
+            <select id="ad-category" name="category" class="form-control" required>
+              <option value="">Sélectionnez une catégorie</option>
+              <option value="vehicules">🚗 Véhicules</option>
+              <option value="immobilier">🏠 Immobilier</option>
+              <option value="emplois">💼 Emplois</option>
+              <option value="services">🔧 Services</option>
+              <option value="divers">📦 Divers</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="ad-description">Description *</label>
+            <textarea id="ad-description" name="description" class="form-control" placeholder="Décrivez votre annonce en détail..." rows="5" required></textarea>
+          </div>
+          
+          <div class="form-group price-input">
+            <label for="ad-price">Prix</label>
+            <input type="number" id="ad-price" name="price" class="form-control" placeholder="0" min="0">
+            <div class="negotiable-check">
+              <input type="checkbox" id="ad-negotiable" name="negotiable">
+              <label for="ad-negotiable">Prix négociable</label>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label>Image (optionnel)</label>
+            <div class="image-upload">
+              <input type="file" accept="image/*" onchange="handleImagePreview(this)">
+              <i class="fas fa-cloud-upload-alt"></i>
+              <p>Cliquez ou glissez une image</p>
+            </div>
+          </div>
+          
+          <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+            <i class="fas fa-check"></i> Publier l'annonce
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Username Modal -->
+  <div class="modal-overlay" id="username-modal">
+    <div class="modal" style="max-width: 400px;">
+      <div class="modal-header">
+        <h3><i class="fas fa-user"></i> Votre pseudo</h3>
+        <button class="modal-close" onclick="closeModal('username-modal')">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form onsubmit="submitUsername(event)">
+          <div class="form-group">
+            <label for="username-input">Entrez votre pseudo RP</label>
+            <input type="text" id="username-input" class="form-control" placeholder="Votre pseudo..." required>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%;">
+            <i class="fas fa-check"></i> Confirmer
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/marketplace.js"></script>
+</body>
+</html>
