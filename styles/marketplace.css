@@ -231,7 +231,7 @@
 .ad-price {
     font-size: 1.25rem;
     font-weight: 700;
-    color: var(--success);
+    color: var(--primary);
 }
 
 .ad-price.negotiable::after {
@@ -308,7 +308,7 @@
 .ad-detail-price {
     font-size: 1.75rem;
     font-weight: 700;
-    color: var(--success);
+    color: var(--primary);
 }
 
 .ad-detail-meta {
@@ -500,7 +500,7 @@
     left: 1rem;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--success);
+    color: var(--primary);
     font-weight: 600;
 }
 
