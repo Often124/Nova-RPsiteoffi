@@ -136,6 +136,25 @@ function initMarketplaceEvents() {
       renderAds();
     });
   }
+
+  // Category Select Toggle
+  const categorySelect = document.getElementById('ad-category');
+  if (categorySelect) {
+    categorySelect.addEventListener('change', (e) => {
+      const vehicleFields = document.getElementById('vehicle-fields');
+      if (vehicleFields) {
+        vehicleFields.style.display = e.target.value === 'vehicules' ? 'block' : 'none';
+
+        // Toggle required attributes for vehicle fields to prevent validation errors when hidden
+        const inputs = vehicleFields.querySelectorAll('input');
+        inputs.forEach(input => {
+          if (e.target.value === 'vehicules') {
+            // Optional: make them required if you want, usually better to leave optional or enforce via JS
+          }
+        });
+      }
+    });
+  }
 }
 
 // Open Ad Detail Modal
@@ -172,6 +191,16 @@ function openAdDetail(adId) {
             <i class="fas fa-calendar"></i>
             <span>${formatDate(selectedAd.date)}</span>
           </div>
+          ${selectedAd.brand && selectedAd.model ? `
+          <div class="ad-detail-meta-item">
+            <i class="fas fa-car"></i>
+            <span>${selectedAd.brand} ${selectedAd.model}</span>
+          </div>` : ''}
+          ${selectedAd.mileage ? `
+          <div class="ad-detail-meta-item">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>${selectedAd.mileage} km</span>
+          </div>` : ''}
           <div class="ad-detail-meta-item">
             <i class="fas fa-eye"></i>
             <span>${Math.floor(Math.random() * 100) + 10} vues</span>
@@ -306,7 +335,10 @@ function submitCreateAd(e) {
     negotiable: formData.get('negotiable') === 'on',
     category: formData.get('category'),
     seller: user.name,
-    image: imageData
+    image: imageData,
+    brand: formData.get('brand'),
+    model: formData.get('model'),
+    mileage: formData.get('mileage')
   };
 
   addAd(newAd);
