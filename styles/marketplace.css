@@ -20,6 +20,11 @@
     display: none;
 }
 
+.marketplace-header .btn {
+    position: relative;
+    z-index: 10;
+}
+
 /* Search & Filters */
 .marketplace-filters {
     display: flex;

@@ -69,13 +69,14 @@ function renderAds() {
   }
 
   if (ads.length === 0) {
+    const catName = getCategoryName(currentCategory);
     container.innerHTML = `
       <div class="empty-state" style="grid-column: 1 / -1;">
         <i class="fas fa-search"></i>
-        <h3>Aucune annonce trouvée</h3>
-        <p>Essayez de modifier vos filtres ou créez la première annonce !</p>
+        <h3>Aucune annonce dans ${catName}</h3>
+        <p>Soyez le premier à poster une annonce dans cette catégorie !</p>
         <button class="btn btn-primary" onclick="openCreateAdModal()">
-          <i class="fas fa-plus"></i> Créer une annonce
+          <i class="fas fa-plus"></i> Déposer une annonce
         </button>
       </div>
     `;
