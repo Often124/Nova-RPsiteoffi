@@ -95,43 +95,16 @@ function renderCurrentSection() {
         case 'reglement':
             renderRules();
             break;
-        case 'staff':
-            renderStaff();
-            break;
-        case 'changelog':
-            renderChangelog();
-            break;
-        case 'candidatures':
-            initApplicationForm();
-            break;
         case 'mairie':
             renderMairie();
             break;
         case 'leboncoin':
             initMarketplace();
             break;
-        case 'liens':
-            // Static content
-            break;
     }
 }
 
-// Render Staff Section
-function renderStaff() {
-    const container = document.getElementById('staff-grid');
-    if (!container || container.dataset.rendered) return;
 
-    container.innerHTML = staffData.map(member => `
-    <div class="card staff-card">
-      <div class="avatar">${member.avatar}</div>
-      <h4>${member.name}</h4>
-      <span class="role ${member.roleClass}">${member.role}</span>
-      <p class="bio">${member.bio}</p>
-    </div>
-  `).join('');
-
-    container.dataset.rendered = 'true';
-}
 
 // Render Rules Section
 function renderRules() {
@@ -156,49 +129,7 @@ function renderRules() {
     container.dataset.rendered = 'true';
 }
 
-// Render Changelog Section
-function renderChangelog() {
-    const container = document.getElementById('changelog-container');
-    if (!container || container.dataset.rendered) return;
 
-    container.innerHTML = changelogData.map(item => `
-    <div class="changelog-item">
-      <span class="changelog-date">${formatDate(item.date)}</span>
-      <h4>${item.title}</h4>
-      <p>${item.description}</p>
-      <div class="changelog-tags">
-        ${item.tags.map(tag => `<span class="tag ${tag}">${getTagLabel(tag)}</span>`).join('')}
-      </div>
-    </div>
-  `).join('');
-
-    container.dataset.rendered = 'true';
-}
-
-// Get tag label
-function getTagLabel(tag) {
-    const labels = {
-        new: 'Nouveau',
-        fix: 'Correction',
-        update: 'Mise à jour',
-        feature: 'Fonctionnalité'
-    };
-    return labels[tag] || tag;
-}
-
-// Application Form
-function initApplicationForm() {
-    const form = document.getElementById('application-form');
-    if (!form) return;
-
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        // Simulate form submission
-        showToast('Candidature envoyée avec succès ! Nous reviendrons vers vous.', 'success');
-        form.reset();
-    });
-}
 
 // Toast Notifications
 function showToast(message, type = 'info') {

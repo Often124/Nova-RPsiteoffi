@@ -42,12 +42,8 @@
       <ul class="nav-links">
         <li><a href="#home" data-section="home" class="active"><i class="fas fa-home"></i> Accueil</a></li>
         <li><a href="#reglement" data-section="reglement"><i class="fas fa-scroll"></i> Règlement</a></li>
-        <li><a href="#staff" data-section="staff"><i class="fas fa-users"></i> Staff</a></li>
-        <li><a href="#changelog" data-section="changelog"><i class="fas fa-newspaper"></i> Changelog</a></li>
-        <li><a href="#candidatures" data-section="candidatures"><i class="fas fa-file-alt"></i> Candidatures</a></li>
         <li><a href="#mairie" data-section="mairie"><i class="fas fa-university"></i> Mairie & Entreprises</a></li>
         <li><a href="#leboncoin" data-section="leboncoin"><i class="fas fa-store"></i> LeBonCoin</a></li>
-        <li><a href="#liens" data-section="liens"><i class="fas fa-link"></i> Liens</a></li>
       </ul>
     </div>
   </nav>
@@ -69,11 +65,11 @@
             Créez votre histoire, rejoignez une communauté passionnée.
           </p>
           <div class="hero-buttons">
-            <a href="https://discord.gg/novarp" target="_blank" class="btn btn-primary btn-lg">
-              <i class="fab fa-discord"></i> Rejoindre Discord
+            <a href="#mairie" class="btn btn-primary btn-lg" onclick="navigateTo('mairie')">
+              <i class="fas fa-university"></i> Services Publics
             </a>
-            <a href="#candidatures" class="btn btn-secondary btn-lg" onclick="navigateTo('candidatures')">
-              <i class="fas fa-paper-plane"></i> Postuler
+            <a href="#leboncoin" class="btn btn-secondary btn-lg" onclick="navigateTo('leboncoin')">
+              <i class="fas fa-store"></i> Petites Annonces
             </a>
           </div>
           <div class="hero-stats">
@@ -137,110 +133,8 @@
     </section>
 
     <!-- ============================================
-         STAFF SECTION
+         (Sections supprimées pour focus RP)
     ============================================ -->
-    <section id="staff" class="section">
-      <div class="container">
-        <div class="section-header">
-          <h2>Notre Équipe</h2>
-          <p>Les personnes qui font vivre Nova-RP au quotidien</p>
-        </div>
-
-        <div class="grid grid-3" id="staff-grid">
-          <!-- Rendered by JS -->
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================
-         CHANGELOG SECTION
-    ============================================ -->
-    <section id="changelog" class="section">
-      <div class="container">
-        <div class="section-header">
-          <h2>Changelog & Actualités</h2>
-          <p>Restez informé des dernières mises à jour du serveur</p>
-        </div>
-
-        <div class="rules-container" id="changelog-container">
-          <!-- Rendered by JS -->
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================
-         CANDIDATURES SECTION
-    ============================================ -->
-    <section id="candidatures" class="section">
-      <div class="container">
-        <div class="section-header">
-          <h2>Candidatures Whitelist</h2>
-          <p>Rejoignez l'aventure Nova-RP en soumettant votre candidature</p>
-        </div>
-
-        <div class="application-info">
-          <h4><i class="fas fa-info-circle"></i> Avant de postuler</h4>
-          <ul>
-            <li>Avoir lu et accepté le règlement complet</li>
-            <li>Avoir un microphone fonctionnel</li>
-            <li>Être majeur ou avoir l'accord parental</li>
-            <li>Avoir une expérience RP (même débutant)</li>
-            <li>Être disponible régulièrement pour jouer</li>
-          </ul>
-        </div>
-
-        <div class="application-form">
-          <h3><i class="fas fa-file-signature"></i> Formulaire de candidature</h3>
-          <form id="application-form">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="app-pseudo">Pseudo Discord</label>
-                <input type="text" id="app-pseudo" name="pseudo" class="form-control" placeholder="Votre pseudo#1234"
-                  required>
-              </div>
-              <div class="form-group">
-                <label for="app-age">Âge</label>
-                <input type="number" id="app-age" name="age" class="form-control" placeholder="Votre âge" min="13"
-                  max="99" required>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="app-experience">Expérience RP</label>
-              <select id="app-experience" name="experience" class="form-control" required>
-                <option value="">Sélectionnez votre niveau</option>
-                <option value="debutant">Débutant (< 1 an)</option>
-                <option value="intermediaire">Intermédiaire (1-3 ans)</option>
-                <option value="experimente">Expérimenté (3+ ans)</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="app-background">Background de votre personnage</label>
-              <textarea id="app-background" name="background" class="form-control"
-                placeholder="Décrivez l'histoire de votre personnage, ses motivations, son caractère..." rows="5"
-                required></textarea>
-            </div>
-
-            <div class="form-group">
-              <label for="app-motivation">Pourquoi Nova-RP ?</label>
-              <textarea id="app-motivation" name="motivation" class="form-control"
-                placeholder="Qu'est-ce qui vous attire sur notre serveur ?" rows="3" required></textarea>
-            </div>
-
-            <div class="form-group">
-              <label for="app-availability">Disponibilités</label>
-              <input type="text" id="app-availability" name="availability" class="form-control"
-                placeholder="Ex: Soirs en semaine, week-ends..." required>
-            </div>
-
-            <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
-              <i class="fas fa-paper-plane"></i> Envoyer ma candidature
-            </button>
-          </form>
-        </div>
-      </div>
-    </section>
 
     <!-- ============================================
          MAIRIE & ENTREPRISES SECTION
@@ -298,59 +192,7 @@
       </div>
     </section>
 
-    <!-- ============================================
-         LIENS SECTION
-    ============================================ -->
-    <section id="liens" class="section">
-      <div class="container">
-        <div class="section-header">
-          <h2>Liens Utiles</h2>
-          <p>Tous les liens importants pour rejoindre et profiter de Nova-RP</p>
-        </div>
-
-        <div class="links-grid">
-          <a href="https://discord.gg/novarp" target="_blank" class="card link-card discord">
-            <div class="icon">
-              <i class="fab fa-discord"></i>
-            </div>
-            <div>
-              <h4>Discord Officiel</h4>
-              <p>Rejoignez notre communauté Discord</p>
-            </div>
-          </a>
-
-          <a href="https://fivem.net" target="_blank" class="card link-card fivem">
-            <div class="icon">
-              <i class="fas fa-gamepad"></i>
-            </div>
-            <div>
-              <h4>Télécharger FiveM</h4>
-              <p>Installez FiveM pour jouer sur le serveur</p>
-            </div>
-          </a>
-
-          <a href="#reglement" class="card link-card guide" onclick="navigateTo('reglement')">
-            <div class="icon">
-              <i class="fas fa-book"></i>
-            </div>
-            <div>
-              <h4>Guide du Débutant</h4>
-              <p>Tout ce qu'il faut savoir pour commencer</p>
-            </div>
-          </a>
-
-          <a href="#candidatures" class="card link-card" onclick="navigateTo('candidatures')">
-            <div class="icon">
-              <i class="fas fa-user-plus"></i>
-            </div>
-            <div>
-              <h4>Postuler</h4>
-              <p>Soumettez votre candidature whitelist</p>
-            </div>
-          </a>
-        </div>
-      </div>
-    </section>
+    <!-- Section Liens supprimée -->
   </main>
 
   <!-- Footer -->
@@ -372,15 +214,14 @@
           <h4>Navigation</h4>
           <a href="#home" onclick="navigateTo('home')">Accueil</a>
           <a href="#reglement" onclick="navigateTo('reglement')">Règlement</a>
-          <a href="#staff" onclick="navigateTo('staff')">Staff</a>
+          <a href="#mairie" onclick="navigateTo('mairie')">Mairie & Entreprises</a>
           <a href="#leboncoin" onclick="navigateTo('leboncoin')">LeBonCoin</a>
         </div>
 
         <div class="footer-section">
           <h4>Ressources</h4>
-          <a href="#candidatures" onclick="navigateTo('candidatures')">Candidatures</a>
-          <a href="#changelog" onclick="navigateTo('changelog')">Changelog</a>
-          <a href="#liens" onclick="navigateTo('liens')">Liens utiles</a>
+          <a href="#reglement" onclick="navigateTo('reglement')">Règlement</a>
+          <a href="#mairie" onclick="navigateTo('mairie')">Services Publics</a>
         </div>
 
         <div class="footer-section">
