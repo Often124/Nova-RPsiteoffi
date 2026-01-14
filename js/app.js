@@ -104,6 +104,9 @@ function renderCurrentSection() {
         case 'candidatures':
             initApplicationForm();
             break;
+        case 'mairie':
+            renderMairie();
+            break;
         case 'leboncoin':
             initMarketplace();
             break;
@@ -269,3 +272,70 @@ window.addEventListener('popstate', () => {
     const hash = window.location.hash.slice(1) || 'home';
     navigateTo(hash);
 });
+
+// Mairie & Entreprises Logic
+function renderMairie() {
+    const servicesContainer = document.getElementById('mairie-services-grid');
+    const entreprisesContainer = document.getElementById('mairie-entreprises-grid');
+
+    if (servicesContainer && !servicesContainer.dataset.rendered) {
+        servicesContainer.innerHTML = `
+        <div class="card" style="grid-column: 1 / -1;">
+            <h3><i class="fas fa-info-circle"></i> Taxes et Impôts</h3>
+            <div class="grid grid-3" style="margin-top: 1rem;">
+                ${mairieData.taxes.map(tax => `
+                    <div class="text-center">
+                        <h4 style="color: var(--primary); font-size: 1.5rem;">${tax.value}</h4>
+                        <p>${tax.title}</p>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+        ${mairieData.services.map(service => `
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: start;">
+                    <h4>${service.title}</h4>
+                    <span class="badge" style="background: var(--surface);">${formatPrice(service.price)}</span>
+                </div>
+                <p>${service.description}</p>
+                <button class="btn btn-primary btn-sm mt-2" onclick="showToast('Rendez-vous à la mairie en jeu !')">Prendre RDV</button>
+            </div>
+        `).join('')}
+    `;
+        servicesContainer.dataset.rendered = 'true';
+    }
+
+    if (entreprisesContainer && !entreprisesContainer.dataset.rendered) {
+        entreprisesContainer.innerHTML = entreprisesData.map(ent => `
+        <div class="card">
+            ${ent.image ? `<img src="${ent.image}" style="width:100%; height:150px; object-fit:cover; border-radius:var(--radius-md) var(--radius-md) 0 0; margin:-1.5rem -1.5rem 1rem -1.5rem;">` : ''}
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <span class="tag feature">${ent.type}</span>
+                ${getStatusBadge(ent.status)}
+            </div>
+            <h4>${ent.name}</h4>
+            <p>${ent.description}</p>
+            ${ent.status === 'Disponible'
+                ? `<div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--glass-border);">
+                     <div style="font-weight: 700; color: var(--primary); font-size: 1.25rem;">${formatPrice(ent.price)}</div>
+                     <button class="btn btn-primary btn-sm mt-2" style="width: 100%;" onclick="showToast('Contactez la mairie sur Discord !')">Acheter</button>
+                   </div>`
+                : `<div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--glass-border);">
+                     <div style="color: var(--text-muted);"><i class="fas fa-user"></i> PDG: ${ent.owner}</div>
+                   </div>`
+            }
+        </div>
+    `).join('');
+        entreprisesContainer.dataset.rendered = 'true';
+    }
+}
+
+function switchMairieTab(tabName) {
+    // Update Tabs UI
+    document.querySelectorAll('.tabs .tab').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+
+    // Show/Hide Content
+    document.getElementById('mairie-content-services').style.display = tabName === 'services' ? 'block' : 'none';
+    document.getElementById('mairie-content-entreprises').style.display = tabName === 'entreprises' ? 'block' : 'none';
+}

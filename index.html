@@ -45,6 +45,7 @@
         <li><a href="#staff" data-section="staff"><i class="fas fa-users"></i> Staff</a></li>
         <li><a href="#changelog" data-section="changelog"><i class="fas fa-newspaper"></i> Changelog</a></li>
         <li><a href="#candidatures" data-section="candidatures"><i class="fas fa-file-alt"></i> Candidatures</a></li>
+        <li><a href="#mairie" data-section="mairie"><i class="fas fa-university"></i> Mairie & Entreprises</a></li>
         <li><a href="#leboncoin" data-section="leboncoin"><i class="fas fa-store"></i> LeBonCoin</a></li>
         <li><a href="#liens" data-section="liens"><i class="fas fa-link"></i> Liens</a></li>
       </ul>
@@ -237,6 +238,33 @@
               <i class="fas fa-paper-plane"></i> Envoyer ma candidature
             </button>
           </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         MAIRIE & ENTREPRISES SECTION
+    ============================================ -->
+    <section id="mairie" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2><i class="fas fa-university"></i> Mairie & Entreprises</h2>
+          <p>Services publics et opportunités professionnelles</p>
+        </div>
+
+        <div class="tabs">
+          <button class="tab active" onclick="switchMairieTab('services')">Services Publics</button>
+          <button class="tab" onclick="switchMairieTab('entreprises')">Entreprises Disponibles</button>
+        </div>
+
+        <div id="mairie-content-services" class="mairie-tab-content active">
+          <!-- Rendered by JS -->
+          <div class="grid grid-2" id="mairie-services-grid"></div>
+        </div>
+
+        <div id="mairie-content-entreprises" class="mairie-tab-content" style="display:none;">
+          <!-- Rendered by JS -->
+          <div class="grid grid-3" id="mairie-entreprises-grid"></div>
         </div>
       </div>
     </section>
