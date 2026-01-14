@@ -633,9 +633,8 @@ a:hover {
 }
 
 /* Page Content Sections (non-SPA) */
-#home {
-  display: block;
-}
+/* Page Content Sections (non-SPA) */
+/* #home { display: block; } Overridden by JS SPA logic */
 
 /* Form Elements */
 .form-group {
