@@ -5,27 +5,28 @@
 let currentCategory = 'all';
 let currentSearchQuery = '';
 let selectedAd = null;
+let favoriteAds = Storage.get('nova-rp-favorites', []);
 
 // Initialize Marketplace
 function initMarketplace() {
-    renderCategoryTabs();
-    renderAds();
-    initMarketplaceEvents();
+  renderCategoryTabs();
+  renderAds();
+  initMarketplaceEvents();
 }
 
 // Render Category Tabs
 function renderCategoryTabs() {
-    const container = document.getElementById('category-tabs');
-    if (!container) return;
+  const container = document.getElementById('category-tabs');
+  if (!container) return;
 
-    const ads = getAds();
+  const ads = getAds();
 
-    container.innerHTML = marketplaceCategories.map(cat => {
-        const count = cat.id === 'all'
-            ? ads.length
-            : ads.filter(a => a.category === cat.id).length;
+  container.innerHTML = marketplaceCategories.map(cat => {
+    const count = cat.id === 'all'
+      ? ads.length
+      : ads.filter(a => a.category === cat.id).length;
 
-        return `
+    return `
       <button class="category-tab ${currentCategory === cat.id ? 'active' : ''}" 
               data-category="${cat.id}">
         <i class="${cat.icon}"></i>
@@ -33,42 +34,42 @@ function renderCategoryTabs() {
         <span class="count">${count}</span>
       </button>
     `;
-    }).join('');
+  }).join('');
 
-    // Add click handlers
-    container.querySelectorAll('.category-tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-            currentCategory = tab.dataset.category;
-            renderCategoryTabs();
-            renderAds();
-        });
+  // Add click handlers
+  container.querySelectorAll('.category-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      currentCategory = tab.dataset.category;
+      renderCategoryTabs();
+      renderAds();
     });
+  });
 }
 
 // Render Ads Grid
 function renderAds() {
-    const container = document.getElementById('ads-grid');
-    if (!container) return;
+  const container = document.getElementById('ads-grid');
+  if (!container) return;
 
-    let ads = getAds();
+  let ads = getAds();
 
-    // Filter by category
-    if (currentCategory !== 'all') {
-        ads = ads.filter(a => a.category === currentCategory);
-    }
+  // Filter by category
+  if (currentCategory !== 'all') {
+    ads = ads.filter(a => a.category === currentCategory);
+  }
 
-    // Filter by search
-    if (currentSearchQuery) {
-        const query = currentSearchQuery.toLowerCase();
-        ads = ads.filter(a =>
-            a.title.toLowerCase().includes(query) ||
-            a.description.toLowerCase().includes(query) ||
-            a.seller.toLowerCase().includes(query)
-        );
-    }
+  // Filter by search
+  if (currentSearchQuery) {
+    const query = currentSearchQuery.toLowerCase();
+    ads = ads.filter(a =>
+      a.title.toLowerCase().includes(query) ||
+      a.description.toLowerCase().includes(query) ||
+      a.seller.toLowerCase().includes(query)
+    );
+  }
 
-    if (ads.length === 0) {
-        container.innerHTML = `
+  if (ads.length === 0) {
+    container.innerHTML = `
       <div class="empty-state" style="grid-column: 1 / -1;">
         <i class="fas fa-search"></i>
         <h3>Aucune annonce trouvée</h3>
@@ -78,20 +79,25 @@ function renderAds() {
         </button>
       </div>
     `;
-        return;
-    }
+    return;
+  }
 
-    container.innerHTML = ads.map(ad => `
+  container.innerHTML = ads.map(ad => {
+    const isFav = favoriteAds.includes(ad.id);
+    return `
     <div class="ad-card" onclick="openAdDetail('${ad.id}')">
       <div class="ad-card-image">
         ${ad.image
-            ? `<img src="${ad.image}" alt="${ad.title}">`
-            : `<div class="placeholder"><i class="${getCategoryIcon(ad.category)}"></i></div>`
-        }
+        ? `<img src="${ad.image}" alt="${ad.title}">`
+        : `<div class="placeholder"><i class="${getCategoryIcon(ad.category)}"></i></div>`
+      }
         <span class="ad-category-badge ${ad.category}">
           <i class="${getCategoryIcon(ad.category)}"></i>
           ${getCategoryName(ad.category)}
         </span>
+        <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite(event, '${ad.id}')">
+          <i class="${isFav ? 'fas' : 'far'} fa-heart"></i>
+        </button>
       </div>
       <div class="ad-card-body">
         <h4 class="ad-card-title">${ad.title}</h4>
@@ -105,50 +111,50 @@ function renderAds() {
         </div>
       </div>
     </div>
-  `).join('');
+  `}).join('');
 }
 
 // Get Category Icon
 function getCategoryIcon(category) {
-    const cat = marketplaceCategories.find(c => c.id === category);
-    return cat ? cat.icon : 'fas fa-box';
+  const cat = marketplaceCategories.find(c => c.id === category);
+  return cat ? cat.icon : 'fas fa-box';
 }
 
 // Get Category Name
 function getCategoryName(category) {
-    const cat = marketplaceCategories.find(c => c.id === category);
-    return cat ? cat.name : category;
+  const cat = marketplaceCategories.find(c => c.id === category);
+  return cat ? cat.name : category;
 }
 
 // Initialize Marketplace Events
 function initMarketplaceEvents() {
-    // Search input
-    const searchInput = document.getElementById('marketplace-search');
-    if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-            currentSearchQuery = e.target.value;
-            renderAds();
-        });
-    }
+  // Search input
+  const searchInput = document.getElementById('marketplace-search');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      currentSearchQuery = e.target.value;
+      renderAds();
+    });
+  }
 }
 
 // Open Ad Detail Modal
 function openAdDetail(adId) {
-    const ads = getAds();
-    selectedAd = ads.find(a => a.id === adId);
+  const ads = getAds();
+  selectedAd = ads.find(a => a.id === adId);
 
-    if (!selectedAd) return;
+  if (!selectedAd) return;
 
-    const modal = document.getElementById('ad-detail-modal');
-    const content = modal.querySelector('.modal-body');
+  const modal = document.getElementById('ad-detail-modal');
+  const content = modal.querySelector('.modal-body');
 
-    content.innerHTML = `
+  content.innerHTML = `
     <div class="ad-detail">
       <div class="ad-detail-image">
         ${selectedAd.image
-            ? `<img src="${selectedAd.image}" alt="${selectedAd.title}">`
-            : `<div class="placeholder"><i class="${getCategoryIcon(selectedAd.category)}"></i></div>`
-        }
+      ? `<img src="${selectedAd.image}" alt="${selectedAd.title}">`
+      : `<div class="placeholder"><i class="${getCategoryIcon(selectedAd.category)}"></i></div>`
+    }
       </div>
       
       <div class="ad-detail-info">
@@ -191,8 +197,8 @@ function openAdDetail(adId) {
         
         <div class="comments-list" id="comments-list">
           ${selectedAd.comments.length === 0
-            ? '<p class="text-muted">Aucun commentaire pour le moment. Soyez le premier !</p>'
-            : selectedAd.comments.map(comment => `
+      ? '<p class="text-muted">Aucun commentaire pour le moment. Soyez le premier !</p>'
+      : selectedAd.comments.map(comment => `
                 <div class="comment">
                   <div class="comment-avatar">${comment.author.charAt(0).toUpperCase()}</div>
                   <div class="comment-content">
@@ -204,7 +210,7 @@ function openAdDetail(adId) {
                   </div>
                 </div>
               `).join('')
-        }
+    }
         </div>
         
         <form class="comment-form" onsubmit="submitComment(event, '${selectedAd.id}')">
@@ -217,119 +223,136 @@ function openAdDetail(adId) {
     </div>
   `;
 
-    openModal('ad-detail-modal');
+  openModal('ad-detail-modal');
 }
 
 // Submit Comment
 function submitComment(e, adId) {
-    e.preventDefault();
+  e.preventDefault();
 
-    const input = document.getElementById('comment-input');
-    const text = input.value.trim();
+  const input = document.getElementById('comment-input');
+  const text = input.value.trim();
 
-    if (!text) return;
+  if (!text) return;
 
-    const user = getCurrentUser();
-    addComment(adId, user.name, text);
+  const user = getCurrentUser();
+  addComment(adId, user.name, text);
 
-    // Refresh the modal
-    openAdDetail(adId);
-    showToast('Commentaire ajouté !', 'success');
+  // Refresh the modal
+  openAdDetail(adId);
+  showToast('Commentaire ajouté !', 'success');
 }
 
 // Open Create Ad Modal
 function openCreateAdModal() {
-    const modal = document.getElementById('create-ad-modal');
-    const form = modal.querySelector('#create-ad-form');
+  const modal = document.getElementById('create-ad-modal');
+  const form = modal.querySelector('#create-ad-form');
 
-    if (form) {
-        form.reset();
-        const preview = form.querySelector('.image-upload .preview');
-        if (preview) preview.remove();
-    }
+  if (form) {
+    form.reset();
+    const preview = form.querySelector('.image-upload .preview');
+    if (preview) preview.remove();
+  }
 
-    openModal('create-ad-modal');
+  openModal('create-ad-modal');
 }
 
 // Handle Image Upload Preview
 function handleImagePreview(input) {
-    const container = input.closest('.image-upload');
-    let preview = container.querySelector('.preview');
+  const container = input.closest('.image-upload');
+  let preview = container.querySelector('.preview');
 
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
 
-        reader.onload = (e) => {
-            if (!preview) {
-                preview = document.createElement('img');
-                preview.className = 'preview';
-                container.appendChild(preview);
-            }
-            preview.src = e.target.result;
+    reader.onload = (e) => {
+      if (!preview) {
+        preview = document.createElement('img');
+        preview.className = 'preview';
+        container.appendChild(preview);
+      }
+      preview.src = e.target.result;
 
-            // Hide the upload icon and text
-            container.querySelector('i').style.display = 'none';
-            container.querySelector('p').style.display = 'none';
-        };
+      // Hide the upload icon and text
+      container.querySelector('i').style.display = 'none';
+      container.querySelector('p').style.display = 'none';
+    };
 
-        reader.readAsDataURL(input.files[0]);
-    }
+    reader.readAsDataURL(input.files[0]);
+  }
 }
 
 // Submit Create Ad Form
 function submitCreateAd(e) {
-    e.preventDefault();
+  e.preventDefault();
 
-    const form = e.target;
-    const formData = new FormData(form);
+  const form = e.target;
+  const formData = new FormData(form);
 
-    const user = getCurrentUser();
+  const user = getCurrentUser();
 
-    // Get image if uploaded
-    let imageData = null;
-    const imageInput = form.querySelector('input[type="file"]');
-    const preview = form.querySelector('.image-upload .preview');
-    if (preview) {
-        imageData = preview.src;
-    }
+  // Get image if uploaded
+  let imageData = null;
+  const imageInput = form.querySelector('input[type="file"]');
+  const preview = form.querySelector('.image-upload .preview');
+  if (preview) {
+    imageData = preview.src;
+  }
 
-    const newAd = {
-        title: formData.get('title'),
-        description: formData.get('description'),
-        price: parseInt(formData.get('price')) || 0,
-        negotiable: formData.get('negotiable') === 'on',
-        category: formData.get('category'),
-        seller: user.name,
-        image: imageData
-    };
+  const newAd = {
+    title: formData.get('title'),
+    description: formData.get('description'),
+    price: parseInt(formData.get('price')) || 0,
+    negotiable: formData.get('negotiable') === 'on',
+    category: formData.get('category'),
+    seller: user.name,
+    image: imageData
+  };
 
-    addAd(newAd);
+  addAd(newAd);
 
-    closeModal('create-ad-modal');
-    renderCategoryTabs();
-    renderAds();
-    showToast('Annonce créée avec succès !', 'success');
+  closeModal('create-ad-modal');
+  renderCategoryTabs();
+  renderAds();
+  showToast('Annonce créée avec succès !', 'success');
+}
+
+// Toggle Favorite
+function toggleFavorite(e, adId) {
+  e.stopPropagation(); // Prevent opening modal
+
+  const index = favoriteAds.indexOf(adId);
+  if (index === -1) {
+    favoriteAds.push(adId);
+    showToast('Annonce ajoutée aux favoris', 'success');
+  } else {
+    favoriteAds.splice(index, 1);
+    showToast('Annonce retirée des favoris', 'info');
+  }
+
+  Storage.set('nova-rp-favorites', favoriteAds);
+  renderAds();
 }
 
 // Set Username Modal
 function openUsernameModal() {
-    openModal('username-modal');
+  openModal('username-modal');
 }
 
 function submitUsername(e) {
-    e.preventDefault();
-    const input = document.getElementById('username-input');
-    const name = input.value.trim();
+  e.preventDefault();
+  const input = document.getElementById('username-input');
+  const name = input.value.trim();
 
-    if (name) {
-        setCurrentUser(name);
-        closeModal('username-modal');
-        showToast(`Bienvenue ${name} !`, 'success');
+  if (name) {
+    setCurrentUser(name);
+    closeModal('username-modal');
+    showToast(`Bienvenue ${name} !`, 'success');
 
-        // Update display if exists
-        const userDisplay = document.getElementById('current-user');
-        if (userDisplay) {
-            userDisplay.textContent = name;
-        }
+    // Update display if exists
+    const userDisplay = document.getElementById('current-user');
+    if (userDisplay) {
+      userDisplay.textContent = name;
     }
+  }
 }

@@ -1,3 +1,4 @@
+
 // ============================================
 // NOVA-RP - Data & Content
 // ============================================
@@ -48,75 +49,131 @@ const staffData = [
     }
 ];
 
-// Rules Data
+// Rules Data from "📜 Règlement Roleplay – Nova-RP.pdf"
 const rulesData = [
     {
-        category: "Règles Générales",
-        icon: "fas fa-gavel",
-        rules: [
-            {
-                title: "Respect obligatoire",
-                description: "Le respect entre joueurs est primordial. Aucune insulte, discrimination ou harcèlement ne sera toléré."
-            },
-            {
-                title: "Pas de meta-gaming",
-                description: "L'utilisation d'informations obtenues hors RP (Discord, stream, etc.) est strictement interdite."
-            },
-            {
-                title: "Pas de power-gaming",
-                description: "Forcer des actions sur d'autres joueurs sans leur laisser le choix est interdit. Laissez les autres jouer."
-            },
-            {
-                title: "Micro obligatoire",
-                description: "Un microphone fonctionnel est requis pour jouer sur le serveur. Le RP vocal est essentiel."
-            },
-            {
-                title: "Pas de cheat/hack",
-                description: "L'utilisation de logiciels tiers, mods non autorisés ou exploits est bannie définitivement."
-            }
-        ]
-    },
-    {
-        category: "Règles RP",
+        category: "1️⃣ Principes du Roleplay",
         icon: "fas fa-theater-masks",
         rules: [
             {
-                title: "Fear RP",
-                description: "Vous devez agir de manière réaliste face au danger. Sous la menace d'une arme, coopérez."
+                title: "🎭 Roleplay (RP)",
+                description: "Vous devez agir comme le ferait votre personnage dans la vraie vie. Vos actions doivent être logiques, réalistes et cohérentes avec la situation. La valeur de votre vie est primordiale."
             },
             {
-                title: "New Life Rule",
-                description: "Après une mort RP, vous oubliez les circonstances de votre décès. Pas de vengeance immédiate."
+                title: "🚫 Hors Roleplay (HRP)",
+                description: "Toute action irréaliste ou incohérente est interdite. Les discussions HRP sont interdites en jeu (chat vocal et écrit), sauf autorisation staff."
             },
             {
-                title: "Pas de Random Kill",
-                description: "Tuer un joueur sans raison RP valable est interdit. Chaque action doit avoir un contexte."
+                title: "🧠 Powergaming",
+                description: "Interdit de réaliser des actions impossibles ou irréalistes (ex : courir après un accident grave, sortir une arme instantanément)."
             },
             {
-                title: "Pas de Combat Logging",
-                description: "Se déconnecter pendant une action RP pour l'éviter est interdit et sanctionné."
-            },
-            {
-                title: "Drive RP réaliste",
-                description: "Conduisez de manière réaliste. Pas de cascade impossible ou de conduite irresponsable sans raison."
+                title: "👀 Metagaming",
+                description: "Utiliser des informations obtenues hors jeu (Discord, stream, amis) est strictement interdit."
             }
         ]
     },
     {
-        category: "Règles de Communication",
-        icon: "fas fa-comments",
+        category: "2️⃣ Règles de Vie et de Mort",
+        icon: "fas fa-heartbeat",
         rules: [
             {
-                title: "RP en toutes circonstances",
-                description: "Restez en RP à tout moment sur le serveur. Utilisez /ooc uniquement si nécessaire."
+                title: "❤️ FearRP",
+                description: "Vous devez craindre pour la vie de votre personnage. Braqué, menacé ou en infériorité claire, vous devez coopérer."
             },
             {
-                title: "Pas de HRP non sollicité",
-                description: "Ne brisez pas le RP des autres avec des conversations hors personnage."
+                title: "💀 Mort RP",
+                description: "Une Mort RP est une mort définitive du personnage. Elle ne peut être décidée que par le staff."
             },
             {
-                title: "Discord = Support",
-                description: "Le Discord est réservé aux discussions communautaires et au support, pas au RP."
+                title: "🔁 NLR (New Life Rule)",
+                description: "Après une mort, vous oubliez totalement la scène. Interdiction de retourner sur le lieu ou de se venger."
+            }
+        ]
+    },
+    {
+        category: "3️⃣ Interactions et Conflits",
+        icon: "fas fa-fist-raised",
+        rules: [
+            {
+                title: "🔫 Gunfight",
+                description: "Les fusillades doivent être justifiées par un contexte RP. Tir à vue interdit."
+            },
+            {
+                title: "🤜 Freepunch / Freekill",
+                description: "Frapper ou tuer sans raison RP valable est interdit."
+            },
+            {
+                title: "🗣️ Insultes et menaces",
+                description: "Les insultes doivent rester RP. Aucune discrimination n’est tolérée."
+            }
+        ]
+    },
+    {
+        category: "4️⃣ Criminalité",
+        icon: "fas fa-mask",
+        rules: [
+            {
+                title: "🕵️ Activités Illégales",
+                description: "Toute activité illégale doit être progressive et crédible. Le braquage abusif ou en chaîne est interdit. Le maximum d’imprimantes à billets est de 5/personne, interdiction de profiter “d'un pote qui ne se connecte jamais.” Il n’est pas autorisé de demander à d’autres personnes d’imprimer pour eux ni même de gagner des pourcentages grâce à l’imprimante des autres. Il est interdit de corrompre : Samu, Police, Pompier, Mairie, Fourrière, Station."
+            },
+            {
+                title: "🏦 Braquages",
+                description: "Nombre de policiers requis : 4 en service actif. Négociation obligatoire."
+            }
+        ]
+    },
+    {
+        category: "5️⃣ Forces de l’Ordre et Services Publics",
+        icon: "fas fa-user-shield",
+        rules: [
+            {
+                title: "🚓 Police / Gendarmerie / Fourrière",
+                description: "Devoir de montrer l’exemple et de cohérence. Usage de la force uniquement en dernier recours (nous sommes en France). Il est interdit de “PIT” un véhicule, la physique ne permet pas une bonne expérience. La fourrière se réserve le droit de garder votre véhicule maximum 1 semaine, une fois ce délai dépassé votre véhicule est revendu."
+            },
+            {
+                title: "🚑 EMS",
+                description: "Priorité aux blessés. Être neutre dans les conflits."
+            }
+        ]
+    },
+    {
+        category: "6️⃣ Règles de Communication",
+        icon: "fas fa-volume-up",
+        rules: [
+            {
+                title: "📢 Audio et Micros",
+                description: "Pas de musique forte ou de sons parasites. Interdit de souffler dans son microphone. Les soundboard RP sont autorisés."
+            }
+        ]
+    },
+    {
+        category: "7️⃣ Stream & Enregistrements",
+        icon: "fas fa-video",
+        rules: [
+            {
+                title: "📹 Règles de diffusion",
+                description: "Streamhack interdit. Toute diffusion doit respecter le RP et les règles. Un enregistrement vous montrant en HRP sera sanctionné."
+            }
+        ]
+    },
+    {
+        category: "8️⃣ Sanctions",
+        icon: "fas fa-gavel",
+        rules: [
+            {
+                title: "⚖️ Conséquences",
+                description: "Le non-respect du règlement peut entraîner : Avertissement, Ban temporaire, Ban définitif. La modération se réserve le droit d’adapter la sanction."
+            }
+        ]
+    },
+    {
+        category: "9️⃣ Staff",
+        icon: "fas fa-crown",
+        rules: [
+            {
+                title: "👑 Rôle du Staff",
+                description: "Le staff est neutre et décisionnaire. Toute contestation se fait calmement en ticket."
             }
         ]
     }
