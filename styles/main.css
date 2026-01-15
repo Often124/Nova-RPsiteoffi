@@ -163,12 +163,19 @@ a:hover {
 }
 
 .nav-container {
+  position: relative;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 2rem;
+}
+
+@media (max-width: 1024px) {
+  .nav-container {
+    justify-content: space-between;
+  }
 }
 
 .nav-logo {
@@ -181,6 +188,14 @@ a:hover {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  position: absolute;
+  left: 2rem;
+}
+
+@media (max-width: 1024px) {
+  .nav-logo {
+    position: static;
+  }
 }
 
 .nav-logo img {
