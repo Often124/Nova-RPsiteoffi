@@ -56,9 +56,6 @@
     <section id="home" class="section active">
       <div class="hero">
         <div class="hero-content">
-          <span class="hero-badge">
-            <i class="fas fa-wifi"></i> Réseau Sécurisé
-          </span>
           <h1>Portail Citoyen Nova-RP</h1>
           <p class="hero-subtitle">
             Accédez à tous les services de la ville : Mairie, Entreprises, Petites Annonces et Règlement.
@@ -71,20 +68,6 @@
             <a href="#leboncoin" class="btn btn-secondary btn-lg" onclick="navigateTo('leboncoin')">
               <i class="fas fa-store"></i> Petites Annonces
             </a>
-          </div>
-          <div class="hero-stats">
-            <div class="stat">
-              <div class="stat-value">3,450</div>
-              <div class="stat-label">Citoyens</div>
-            </div>
-            <div class="stat">
-              <div class="stat-value">120+</div>
-              <div class="stat-label">Entreprises</div>
-            </div>
-            <div class="stat">
-              <div class="stat-value">24/7</div>
-              <div class="stat-label">Services Publics</div>
-            </div>
           </div>
         </div>
       </div>
@@ -167,6 +150,9 @@
     <!-- ============================================
          LEBONCOIN SECTION
     ============================================ -->
+    <!-- ============================================
+         LEBONCOIN SECTION
+    ============================================ -->
     <section id="leboncoin" class="section">
       <div class="container">
         <div class="marketplace-header">
@@ -176,19 +162,46 @@
           </button>
         </div>
 
-        <div class="marketplace-filters">
-          <div class="search-box">
-            <i class="fas fa-search"></i>
-            <input type="text" id="marketplace-search" placeholder="Rechercher une annonce...">
+        <div class="marketplace-layout">
+          <!-- Sidebar Filters -->
+          <aside class="marketplace-sidebar">
+            <div class="filter-group">
+              <label><i class="fas fa-search"></i> Recherche</label>
+              <input type="text" id="marketplace-search" class="form-control" placeholder="Que cherchez-vous ?">
+            </div>
+
+            <div class="filter-group">
+              <label><i class="fas fa-tags"></i> Catégories</label>
+              <div class="category-list" id="category-list">
+                <!-- Rendered by JS -->
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <label><i class="fas fa-sort"></i> Trier par</label>
+              <select id="marketplace-sort" class="form-control" onchange="updateSort(this.value)">
+                <option value="date-desc">Plus récents</option>
+                <option value="date-asc">Plus anciens</option>
+                <option value="price-asc">Prix croissant</option>
+                <option value="price-desc">Prix décroissant</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label><i class="fas fa-coins"></i> Prix</label>
+              <div class="price-range">
+                <input type="number" id="price-min" class="form-control" placeholder="Min" onchange="renderAds()">
+                <input type="number" id="price-max" class="form-control" placeholder="Max" onchange="renderAds()">
+              </div>
+            </div>
+          </aside>
+
+          <!-- Main Content -->
+          <div class="marketplace-content">
+            <div class="ads-grid" id="ads-grid">
+              <!-- Rendered by JS -->
+            </div>
           </div>
-        </div>
-
-        <div class="category-tabs" id="category-tabs">
-          <!-- Rendered by JS -->
-        </div>
-
-        <div class="ads-grid" id="ads-grid">
-          <!-- Rendered by JS -->
         </div>
       </div>
     </section>

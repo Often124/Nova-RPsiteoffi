@@ -9,14 +9,14 @@ let favoriteAds = Storage.get('nova-rp-favorites', []);
 
 // Initialize Marketplace
 function initMarketplace() {
-  renderCategoryTabs();
+  renderCategoryList();
   renderAds();
   initMarketplaceEvents();
 }
 
-// Render Category Tabs
-function renderCategoryTabs() {
-  const container = document.getElementById('category-tabs');
+// Render Category List (Sidebar)
+function renderCategoryList() {
+  const container = document.getElementById('category-list');
   if (!container) return;
 
   const ads = getAds();
@@ -27,23 +27,19 @@ function renderCategoryTabs() {
       : ads.filter(a => a.category === cat.id).length;
 
     return `
-      <button class="category-tab ${currentCategory === cat.id ? 'active' : ''}" 
-              data-category="${cat.id}">
-        <i class="${cat.icon}"></i>
-        ${cat.name}
-        <span class="count">${count}</span>
+      <button class="category-item ${currentCategory === cat.id ? 'active' : ''}" 
+              onclick="selectCategory('${cat.id}')">
+        <span><i class="${cat.icon}"></i> ${cat.name}</span>
+        ${count > 0 ? `<span class="count">${count}</span>` : ''}
       </button>
     `;
   }).join('');
+}
 
-  // Add click handlers
-  container.querySelectorAll('.category-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      currentCategory = tab.dataset.category;
-      renderCategoryTabs();
-      renderAds();
-    });
-  });
+function selectCategory(catId) {
+  currentCategory = catId;
+  renderCategoryList();
+  renderAds();
 }
 
 // Render Ads Grid
@@ -67,6 +63,23 @@ function renderAds() {
       a.seller.toLowerCase().includes(query)
     );
   }
+
+  // Filter by Price Range
+  const minPrice = document.getElementById('price-min')?.value;
+  const maxPrice = document.getElementById('price-max')?.value;
+  if (minPrice) ads = ads.filter(a => a.price >= parseInt(minPrice));
+  if (maxPrice) ads = ads.filter(a => a.price <= parseInt(maxPrice));
+
+  // Sort
+  const sortValue = document.getElementById('marketplace-sort')?.value || 'date-desc';
+  ads.sort((a, b) => {
+    switch (sortValue) {
+      case 'price-asc': return a.price - b.price;
+      case 'price-desc': return b.price - a.price;
+      case 'date-asc': return new Date(a.date) - new Date(b.date);
+      case 'date-desc': default: return new Date(b.date) - new Date(a.date);
+    }
+  });
 
   if (ads.length === 0) {
     const catName = getCategoryName(currentCategory);
@@ -345,9 +358,14 @@ function submitCreateAd(e) {
   addAd(newAd);
 
   closeModal('create-ad-modal');
-  renderCategoryTabs();
+  renderCategoryList();
   renderAds();
   showToast('Annonce créée avec succès !', 'success');
+}
+
+// Update Sort
+function updateSort(val) {
+  renderAds();
 }
 
 // Toggle Favorite
