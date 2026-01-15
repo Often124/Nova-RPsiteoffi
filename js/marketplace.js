@@ -49,6 +49,15 @@ function renderAds() {
 
   let ads = getAds();
 
+  // Safety Check: If no ads, try to reset from sample
+  if (!ads || !Array.isArray(ads) || ads.length === 0) {
+    console.warn("No ads found, resetting to defaults.");
+    if (typeof sampleAds !== 'undefined') {
+      Storage.set('nova-rp-ads', sampleAds);
+      ads = sampleAds;
+    }
+  }
+
   // Filter by category
   if (currentCategory !== 'all') {
     ads = ads.filter(a => a.category === currentCategory);
@@ -58,9 +67,9 @@ function renderAds() {
   if (currentSearchQuery) {
     const query = currentSearchQuery.toLowerCase();
     ads = ads.filter(a =>
-      a.title.toLowerCase().includes(query) ||
-      a.description.toLowerCase().includes(query) ||
-      a.seller.toLowerCase().includes(query)
+      (a.title && a.title.toLowerCase().includes(query)) ||
+      (a.description && a.description.toLowerCase().includes(query)) ||
+      (a.seller && a.seller.toLowerCase().includes(query))
     );
   }
 
