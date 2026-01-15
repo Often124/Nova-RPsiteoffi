@@ -337,57 +337,143 @@ function initializeAds() {
     }
 }
 
-// Get all ads
-function getAds() {
-    return Storage.get('nova-rp-ads', sampleAds);
-}
+// ============================================
+// NOVA-RP - Data Service (Async)
+// ============================================
 
-// Add new ad
-function addAd(ad) {
-    const ads = getAds();
-    ad.id = 'ad-' + Date.now();
-    ad.date = new Date().toISOString().split('T')[0];
-    ad.comments = [];
-    ads.unshift(ad);
-    Storage.set('nova-rp-ads', ads);
-    return ad;
-}
+const DataService = {
+    // Get all ads
+    async getAds() {
+        if (supabase) {
+            try {
+                let { data: ads, error } = await supabase
+                    .from('ads')
+                    .select('*')
+                    .order('created_at', { ascending: false });
 
-// Update ad
-function updateAd(adId, updates) {
-    const ads = getAds();
-    const index = ads.findIndex(a => a.id === adId);
-    if (index !== -1) {
-        ads[index] = { ...ads[index], ...updates };
-        Storage.set('nova-rp-ads', ads);
-        return ads[index];
-    }
-    return null;
-}
+                if (error) throw error;
+                if (ads) return ads.map(mapSupabaseAd);
+            } catch (err) {
+                console.warn('Supabase Error (getAds), falling back to Local:', err.message);
+            }
+        }
+        // Fallback or Local Mode
+        return Storage.get('nova-rp-ads', sampleAds);
+    },
 
-// Delete ad
-function deleteAd(adId) {
-    const ads = getAds();
-    const filtered = ads.filter(a => a.id !== adId);
-    Storage.set('nova-rp-ads', filtered);
-    return filtered;
-}
+    // Add new ad
+    async addAd(ad) {
+        if (supabase) {
+            try {
+                const sbAd = mapLocalAdToSupabase(ad);
+                const { data, error } = await supabase
+                    .from('ads')
+                    .insert([sbAd])
+                    .select();
 
-// Add comment to ad
-function addComment(adId, author, text) {
-    const ads = getAds();
-    const ad = ads.find(a => a.id === adId);
-    if (ad) {
-        ad.comments.push({
-            author,
-            text,
-            date: new Date().toISOString().split('T')[0]
-        });
+                if (error) throw error;
+                if (data) return mapSupabaseAd(data[0]);
+            } catch (err) {
+                console.error('Supabase Error (addAd):', err.message);
+                // Fallback to local to not break UI
+            }
+        }
+
+        // Local Logic
+        const ads = Storage.get('nova-rp-ads', sampleAds);
+        ad.id = 'ad-' + Date.now();
+        ad.date = new Date().toISOString().split('T')[0];
+        ad.comments = [];
+        ads.unshift(ad);
         Storage.set('nova-rp-ads', ads);
         return ad;
+    },
+
+    // Add comment
+    async addComment(adId, author, text) {
+        // Note: Supabase would require a 'comments' table or updating a JSON column
+        // Implementing JSON column update for simplicity
+        if (supabase) {
+            try {
+                // First get existing comments
+                const { data: currentAd, error: fetchError } = await supabase
+                    .from('ads')
+                    .select('comments')
+                    .eq('id', adId)
+                    .single();
+
+                if (fetchError) throw fetchError;
+
+                const newComment = { author, text, date: new Date().toISOString().split('T')[0] };
+                const updatedComments = [...(currentAd.comments || []), newComment];
+
+                const { error: updateError } = await supabase
+                    .from('ads')
+                    .update({ comments: updatedComments })
+                    .eq('id', adId);
+
+                if (updateError) throw updateError;
+                return true;
+            } catch (err) {
+                console.warn('Supabase Error (addComment):', err.message);
+            }
+        }
+
+        // Local
+        const ads = Storage.get('nova-rp-ads', sampleAds);
+        const ad = ads.find(a => a.id === adId);
+        if (ad) {
+            ad.comments.push({
+                author,
+                text,
+                date: new Date().toISOString().split('T')[0]
+            });
+            Storage.set('nova-rp-ads', ads);
+            return ad;
+        }
+        return null;
     }
-    return null;
+};
+
+// Mappers
+function mapSupabaseAd(sbAd) {
+    return {
+        id: sbAd.id,
+        title: sbAd.title,
+        description: sbAd.description,
+        price: sbAd.price,
+        negotiable: sbAd.negotiable,
+        category: sbAd.category,
+        seller: sbAd.seller,
+        image: sbAd.image_url || sbAd.image, // Handle both naming conventions
+        brand: sbAd.brand,
+        model: sbAd.model,
+        mileage: sbAd.mileage,
+        date: sbAd.created_at ? sbAd.created_at.split('T')[0] : new Date().toISOString().split('T')[0],
+        comments: sbAd.comments || []
+    };
 }
+
+function mapLocalAdToSupabase(ad) {
+    return {
+        // id is auto-generated by Supabase usually
+        title: ad.title,
+        description: ad.description,
+        price: ad.price,
+        negotiable: ad.negotiable,
+        category: ad.category,
+        seller: ad.seller,
+        image: ad.image,
+        brand: ad.brand,
+        model: ad.model,
+        mileage: ad.mileage,
+        comments: [] // Init empty comments
+    };
+}
+
+// Deprecated global functions (Proxies for compatibility if needed, but we should use DataService)
+// We will update marketplace.js to use DataService instead of these.
+
 
 // Current user (simulated)
 function getCurrentUser() {

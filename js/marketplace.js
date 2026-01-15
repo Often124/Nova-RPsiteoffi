@@ -7,11 +7,19 @@ let currentSearchQuery = '';
 let selectedAd = null;
 let favoriteAds = Storage.get('nova-rp-favorites', []);
 
+let cachedAds = [];
+
 // Initialize Marketplace
-function initMarketplace() {
+async function initMarketplace() {
+  await refreshAds(); // Initial fetch
   renderCategoryList();
   renderAds();
   initMarketplaceEvents();
+}
+
+// Refresh Ads Cache
+async function refreshAds() {
+  cachedAds = await DataService.getAds();
 }
 
 // Render Category List (Sidebar)
@@ -19,7 +27,8 @@ function renderCategoryList() {
   const container = document.getElementById('category-list');
   if (!container) return;
 
-  const ads = getAds();
+  // Use Cached Ads
+  const ads = cachedAds;
 
   container.innerHTML = marketplaceCategories.map(cat => {
     const count = cat.id === 'all'
@@ -47,14 +56,14 @@ function renderAds() {
   const container = document.getElementById('ads-grid');
   if (!container) return;
 
-  let ads = getAds();
+  let ads = [...cachedAds]; // Copy to avoid mutating cache by sort
 
-  // Safety Check: If no ads, try to reset from sample
+  // Safety Check
   if (!ads || !Array.isArray(ads) || ads.length === 0) {
-    console.warn("No ads found, resetting to defaults.");
-    if (typeof sampleAds !== 'undefined') {
-      Storage.set('nova-rp-ads', sampleAds);
-      ads = sampleAds;
+    // If no ads in cache (and not loading), maybe show empty
+    // But DataService.getAds handles fallback, so cachedAds should be array
+    if (ads.length === 0) {
+      // Optional: could force refresh here if desperate, but let's trust DataService
     }
   }
 
@@ -181,9 +190,15 @@ function initMarketplaceEvents() {
 }
 
 // Open Ad Detail Modal
-function openAdDetail(adId) {
-  const ads = getAds();
-  selectedAd = ads.find(a => a.id === adId);
+async function openAdDetail(adId) {
+  // Try to find in cache first
+  selectedAd = cachedAds.find(a => a.id === adId);
+
+  if (!selectedAd) {
+    // If not in cache, maybe refresh?
+    await refreshAds();
+    selectedAd = cachedAds.find(a => a.id === adId);
+  }
 
   if (!selectedAd) return;
 
@@ -279,7 +294,7 @@ function openAdDetail(adId) {
 }
 
 // Submit Comment
-function submitComment(e, adId) {
+async function submitComment(e, adId) {
   e.preventDefault();
 
   const input = document.getElementById('comment-input');
@@ -288,7 +303,9 @@ function submitComment(e, adId) {
   if (!text) return;
 
   const user = getCurrentUser();
-  addComment(adId, user.name, text);
+  await DataService.addComment(adId, user.name, text);
+  await refreshAds(); // Refresh to get the new comment
+
 
   // Refresh the modal
   openAdDetail(adId);
@@ -335,7 +352,7 @@ function handleImagePreview(input) {
 }
 
 // Submit Create Ad Form
-function submitCreateAd(e) {
+async function submitCreateAd(e) {
   e.preventDefault();
 
   const form = e.target;
@@ -364,12 +381,26 @@ function submitCreateAd(e) {
     mileage: formData.get('mileage')
   };
 
-  addAd(newAd);
+  const btn = form.querySelector('button[type="submit"]');
+  const originalText = btn.innerHTML;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Publication...';
+  btn.disabled = true;
 
-  closeModal('create-ad-modal');
-  renderCategoryList();
-  renderAds();
-  showToast('Annonce créée avec succès !', 'success');
+  try {
+    await DataService.addAd(newAd);
+    await refreshAds(); // Refresh cache
+
+    closeModal('create-ad-modal');
+    renderCategoryList();
+    renderAds();
+    showToast('Annonce créée avec succès !', 'success');
+  } catch (err) {
+    console.error(err);
+    showToast('Erreur lors de la publication', 'error');
+  } finally {
+    btn.innerHTML = originalText;
+    btn.disabled = false;
+  }
 }
 
 // Update Sort
